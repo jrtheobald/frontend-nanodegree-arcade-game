@@ -21,9 +21,13 @@ Enemy.prototype.update = function(dt) {
 
     //let time = 500;
 
-
-    this.dx = this.speed * dt; // time = time * dt * 25;
-    this.x += this.dx;
+    if (this.x < 505) {
+        this.dx = this.speed * dt; // time = time * dt * 25;
+        this.x += this.dx;
+    } else {
+        this.x = 0;
+    }
+    
 
 
 
@@ -44,17 +48,36 @@ Enemy.prototype.render = function() {
 
 var Player = function() {
     this.sprite = 'images/char-boy.png';
-    this.x = 0;
-    this.y = 0;
+    this.x = 100;
+    this.y = 380;
     this.speed = 0;
 };
 
 Player.prototype.update = function(dt) {
     // update player location in response to keypress
+    console.log(`${this.x}, ${this.y}`);
 };
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+Player.prototype.handleInput = function(direction) {
+    switch (direction) {
+        case 'left':
+            this.x -= 20;
+            break;
+        case 'right':
+            this.x += 20;
+            break;
+        case 'up':
+            this.y -= 20;
+            break;
+        case 'down':
+            this.y += 20;
+            break;
+
+    }
 };
 
 // Now instantiate your objects.
@@ -62,7 +85,7 @@ Player.prototype.render = function() {
 // Place the player object in a variable called player
 const enemy1 = new Enemy(500, 0, 50);
 const enemy2 = new Enemy(300, 0, 150);
-const enemy3 = new Enemy(30, 0, 230);
+const enemy3 = new Enemy(60, 0, 230);
 const allEnemies = [enemy1, enemy2, enemy3];
 const player = new Player();
 
