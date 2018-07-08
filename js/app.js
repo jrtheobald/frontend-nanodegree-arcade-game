@@ -12,6 +12,7 @@ var Enemy = function(speed, x, y) {
     this.radius = 20;
     this.distanceFromPlayer = function() {
         // calculate enemy's distance from player
+        // inspiration from https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
         let deltax = this.x - player.x;
         let deltay = this.y - player.y;
         let distance = Math.sqrt(deltax * deltax + deltay * deltay);
