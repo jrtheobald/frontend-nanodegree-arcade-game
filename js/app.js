@@ -1,5 +1,5 @@
 // Enemies our player must avoid
-var Enemy = function(speed, x, y) {
+var Enemy = function (speed, x, y) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -10,7 +10,7 @@ var Enemy = function(speed, x, y) {
     this.y = y; // 50 150 230
     this.speed = speed;
     this.radius = 20;
-    this.distanceFromPlayer = function() {
+    this.distanceFromPlayer = function () {
         // calculate enemy's distance from player
         // inspiration from https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
         let deltax = this.x - player.x;
@@ -26,7 +26,7 @@ var Enemy = function(speed, x, y) {
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt) {
+Enemy.prototype.update = function (dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
@@ -41,7 +41,7 @@ Enemy.prototype.update = function(dt) {
 };
 
 // Draw the enemy on the screen, required method for game
-Enemy.prototype.render = function() {
+Enemy.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
@@ -49,7 +49,7 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 
-var Player = function() {
+var Player = function () {
     this.sprite = 'images/char-boy.png';
     this.x = 100;
     this.y = 380;
@@ -59,7 +59,7 @@ var Player = function() {
     this.collision = false;
 };
 
-Player.prototype.update = function(dt) {
+Player.prototype.update = function (dt) {
     // update player location in response to keypress
     // console.log(`${this.x}, ${this.y}`);
     // console.log(`${this.inBound}`);
@@ -81,11 +81,11 @@ Player.prototype.update = function(dt) {
     }
 };
 
-Player.prototype.render = function() {
+Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-Player.prototype.handleInput = function(direction) {
+Player.prototype.handleInput = function (direction) {
     // if player is within bounds handle input normally
     if (this.inBound) {
         switch (direction) {
@@ -101,15 +101,15 @@ Player.prototype.handleInput = function(direction) {
             case 'down':
                 this.y += 20;
                 break;
-    
+
         }
-    // if the player is out of bounds, reset the player location  
+        // if the player is out of bounds, reset the player location  
     } else {
         this.x = 100;
         this.y = 380;
         this.inBound = true;
     }
-    
+
 };
 
 // Now instantiate your objects.
@@ -124,7 +124,7 @@ const player = new Player();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
-document.addEventListener('keyup', function(e) {
+document.addEventListener('keyup', function (e) {
     var allowedKeys = {
         37: 'left',
         38: 'up',
