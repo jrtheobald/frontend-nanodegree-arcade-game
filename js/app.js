@@ -9,6 +9,18 @@ var Enemy = function(speed, x, y) {
     this.x = x;
     this.y = y; // 50 150 230
     this.speed = speed;
+    this.radius = 20;
+    this.distanceFromPlayer = function() {
+        // calculate enemy's distance from player
+        let deltax = this.x - player.x;
+        let deltay = this.y - player.y;
+        let distance = Math.sqrt(deltax * deltax + deltay * deltay);
+
+        // compare distance to sum of entities radii to check for collision
+        if (distance < this.radius + player.radius) {
+            player.collision = true; // assign boolean to player collision property
+        }
+    }
 };
 
 // Update the enemy's position, required method for game
@@ -17,7 +29,7 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-
+    this.distanceFromPlayer();
     // this ensures the bugs continuously travel across the screen
     if (this.x < 505) {
         this.dx = this.speed * dt;
@@ -42,15 +54,29 @@ var Player = function() {
     this.y = 380;
     this.speed = 0;
     this.inBound = true;
+    this.radius = 33;
+    this.collision = false;
 };
 
 Player.prototype.update = function(dt) {
     // update player location in response to keypress
-    console.log(`${this.x}, ${this.y}`);
-    console.log(`${this.inBound}`);
+    // console.log(`${this.x}, ${this.y}`);
+    // console.log(`${this.inBound}`);
     // check to ensure that the player's position is within bounds
     if (this.x > 410 || this.x < -10 || this.y > 420 || this.y < -40) {
         this.inBound = false;
+    }
+
+    if (this.collision) {
+        this.x = 100;
+        this.y = 380;
+        this.collision = false;
+    }
+
+    if (this.y < 0) {
+        // check player location is in water
+        delete ctx;
+        alert('Game Over');
     }
 };
 
@@ -59,7 +85,7 @@ Player.prototype.render = function() {
 };
 
 Player.prototype.handleInput = function(direction) {
-    // if player is within bouns update handle input normally
+    // if player is within bounds handle input normally
     if (this.inBound) {
         switch (direction) {
             case 'left':
@@ -79,7 +105,7 @@ Player.prototype.handleInput = function(direction) {
     // if the player is out of bounds, reset the player location  
     } else {
         this.x = 100;
-        this.y = 300;
+        this.y = 380;
         this.inBound = true;
     }
     
